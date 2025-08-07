@@ -1,20 +1,18 @@
 package com.ensecure.controller;
 
 import com.ensecure.service.SendMailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class MailController {
 
     private final SendMailService sendMailService;
-    
-    public MailController(SendMailService sendMailService) {
-    	this.sendMailService = sendMailService;
-    }
 
     /**
      * 메일을 전송하는 엔드포인트입니다.

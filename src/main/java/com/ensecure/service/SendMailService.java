@@ -6,17 +6,17 @@ import com.amazonaws.services.simpleemail.model.Content;
 import com.amazonaws.services.simpleemail.model.Destination;
 import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class SendMailService {
 
     private final AmazonSimpleEmailService sesClient;
-    
-    public SendMailService(AmazonSimpleEmailService sesClient) {
-    	this.sesClient = sesClient;
-    }
 
     // 발신자
     @Value("${aws.ses.send-mail-to}")
@@ -44,11 +44,9 @@ public class SendMailService {
                 ;
 
             sesClient.sendEmail(request);
-
-            System.out.println("Email sent!");
+            log.info("Sent email to {}", to);
         } catch (Exception ex) {
-            System.out.println("The email was not sent. Error message: "
-                + ex.getMessage());
+            log.error("The email was not sent. Error message: {}", ex.getMessage(), ex);
         }
     }
 }
